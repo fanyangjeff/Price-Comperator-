@@ -1,32 +1,36 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <navbar ref='mynavbar'></navbar>
+    <tableview ref="mytableview"></tableview>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import navbar from './components/Navbar'
+import tableview from './components/Tableview'
 
-#nav {
-  padding: 30px;
+export default {
+  data: function () {
+    return {
+      userinput: '',
+      websites: ['https://api03.6bqb.com/alibaba/app/search']
+    }
+  },
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: {
+    navbar: navbar,
+    tableview: tableview
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
+  methods: {
+    update_search: function () {
+      this.userinput = this.$refs.mynavbar.getUserInput()
+      console.log(this.$refs.mynavbar.getUserInput())
+    },
+
+    sortbyprice: function () {
+
     }
   }
 }
-</style>
+</script>
