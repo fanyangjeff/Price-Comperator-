@@ -8,11 +8,11 @@
               <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click="updatePriceList">Pricing/价格排行</a>
+              <a class="nav-link" @click="reorder">Pricing/按价格排行</a>
             </li>
           </ul>
           <div class="form-check-inline">
-            <input v-model="userinput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <input v-model="$store.state.userinput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button @click="updateSearch" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </div>
         </div>
@@ -32,22 +32,27 @@
 
 <script>
 import bootstrap from './stylesheet'
-import { bus } from '../main.js'
 
 export default {
   data: function () {
     return {
-      userinput: ''
     }
   },
 
   methods: {
-    updatePriceList: function () {
-      bus.$emit('sortByPrice')
+    reorder: function () {
+      // bus.$emit('sortByPrice')
+      this.$store.commit('reorderByPrice')
     },
 
     updateSearch: function () {
-      bus.$emit('searchItem', this.userinput)
+      this.$store.state.itemList = []
+      if (this.$store.state.itemList.length === 0) {
+        this.$store.dispatch('searchItem')
+      } else {
+        console.log(this.$store.state.itemList)
+        this.$store.dispatch('searchItem')
+      }
     }
 
   },
